@@ -1,6 +1,6 @@
 'use client'
 
-import { useSupabase } from '@/contexts/SupabaseProvider'
+import { useSupabase } from '../../../contexts/SupabaseProvider'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
@@ -10,6 +10,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (user?.role) {
+      console.log("USER ", user)
       const role = user.role
       switch (role) {
         case 'THERAPIST':

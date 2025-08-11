@@ -61,7 +61,7 @@ export default function TherapistDashboard() {
           .eq('therapist_id', user.id)
 
         if (clientsData) {
-          setClients(clientsData.map(assignment => assignment.client))
+          setClients(clientsData.map((assignment: any) => assignment.client))
         }
 
         // Fetch recent sessions
