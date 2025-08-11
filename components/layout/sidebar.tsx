@@ -2,8 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useSupabase } from '../../contexts/SupabaseProvider'
+import { usePathname, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Home, 
@@ -26,12 +25,14 @@ import {
 import { Button } from '../../components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '../../components/ui/avatar'
 import { cn } from '../../lib/utils'
+import { UserRole } from '../../lib/auth'
+import { useAuth } from '../../lib/hooks/useAuth'
 
 interface NavigationItem {
   name: string
   href: string
   icon: any
-  roles: string[]
+  roles: UserRole[]
 }
 
 const navigation: NavigationItem[] = [
@@ -50,19 +51,38 @@ const navigation: NavigationItem[] = [
 
 export function Sidebar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isSigningOut, setIsSigningOut] = useState(false)
   const pathname = usePathname()
-  const { user, supabase } = useSupabase()
+  const router = useRouter()
+  const { user, loading, signOut } = useAuth()
 
-  const userRole = user?.role
-  const userName = user?.name || 'User'
-  const userEmail = user?.email || ''
-  const isDemo = user?.isDemo
-
-  const getInitials = (name: string) => {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase()
+  if (loading) {
+    return (
+      <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 bg-white border-r">
+        <div className="flex items-center justify-center h-full">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        </div>
+      </div>
+    )
   }
 
-  const getRoleIcon = (role: string) => {
+  if (!user) {
+    return null
+  }
+
+  const userRole = user.role
+  const userName = user.name || 
+                   (user.firstName && user.lastName 
+                     ? `${user.firstName} ${user.lastName}` 
+                     : user.firstName || user.email?.split('@')[0] || 'User')
+  const userEmail = user.email || ''
+  const isDemo = user.isDemo
+
+  const getInitials = (name: string) => {
+    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+  }
+
+  const getRoleIcon = (role: UserRole) => {
     switch (role) {
       case 'THERAPIST':
         return <Brain className="h-4 w-4" />
@@ -71,12 +91,14 @@ export function Sidebar() {
       case 'COUPLE_PARTNER_1':
       case 'COUPLE_PARTNER_2':
         return <Sparkles className="h-4 w-4" />
+      case 'ADMIN':
+        return <User className="h-4 w-4" />
       default:
         return <User className="h-4 w-4" />
     }
   }
 
-  const getRoleDisplay = (role: string) => {
+  const getRoleDisplay = (role: UserRole) => {
     switch (role) {
       case 'THERAPIST':
         return 'Therapist'
@@ -86,6 +108,8 @@ export function Sidebar() {
         return 'Partner 1'
       case 'COUPLE_PARTNER_2':
         return 'Partner 2'
+      case 'ADMIN':
+        return 'Administrator'
       default:
         return 'User'
     }
@@ -95,17 +119,31 @@ export function Sidebar() {
     userRole && item.roles.includes(userRole)
   )
 
+  const handleSignOut = async () => {
+    setIsSigningOut(true)
+    try {
+      await signOut()
+      router.push('/')
+    } catch (error) {
+      console.error('Error signing out:', error)
+    } finally {
+      setIsSigningOut(false)
+    }
+  }
+
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
       {/* Logo */}
       <div className="flex items-center gap-3 px-6 py-6 border-b">
-        <div className="bg-gradient-therapy p-2 rounded-xl">
+        <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-2 rounded-xl">
           <Brain className="h-6 w-6 text-white" />
         </div>
-        <div>
-          <h1 className="font-display font-bold text-xl text-gradient">Mind Heavenly</h1>
+        <div className="flex-1 min-w-0">
+          <h1 className="font-display font-bold text-xl bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
+            Mind Heavenly
+          </h1>
           {isDemo && (
-            <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">
+            <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full mt-1 inline-block">
               Demo Mode
             </span>
           )}
@@ -116,25 +154,32 @@ export function Sidebar() {
       <div className="px-6 py-4 border-b">
         <div className="flex items-center gap-3">
           <Avatar className="h-10 w-10">
-            <AvatarImage src={session?.user?.image || ''} />
-            <AvatarFallback className="bg-gradient-therapy text-white">
+            <AvatarImage src="" alt={userName} />
+            <AvatarFallback className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
               {getInitials(userName)}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
-            <p className="font-medium text-sm truncate">{userName}</p>
+            <p className="font-medium text-sm truncate" title={userName}>
+              {userName}
+            </p>
             <div className="flex items-center gap-2">
-              {getRoleIcon(userRole || '')}
+              {getRoleIcon(userRole)}
               <p className="text-xs text-muted-foreground">
-                {getRoleDisplay(userRole || '')}
+                {getRoleDisplay(userRole)}
               </p>
             </div>
+            {userEmail && (
+              <p className="text-xs text-muted-foreground truncate" title={userEmail}>
+                {userEmail}
+              </p>
+            )}
           </div>
         </div>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-4 py-6 space-y-2">
+      <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
         {filteredNavigation.map((item) => {
           const Icon = item.icon
           const isActive = pathname === item.href || 
@@ -145,15 +190,15 @@ export function Sidebar() {
               key={item.name}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-colors",
+                "flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-200",
                 isActive 
                   ? "bg-primary text-primary-foreground shadow-sm" 
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
               )}
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              <Icon className="h-4 w-4" />
-              {item.name}
+              <Icon className="h-4 w-4 flex-shrink-0" />
+              <span className="truncate">{item.name}</span>
             </Link>
           )
         })}
@@ -164,10 +209,13 @@ export function Sidebar() {
         <Button
           variant="ghost"
           className="w-full justify-start gap-3 text-muted-foreground hover:text-foreground"
-          onClick={() => supabase.auth.signOut()}
+          onClick={handleSignOut}
+          disabled={isSigningOut}
         >
-          <LogOut className="h-4 w-4" />
-          Sign Out
+          <LogOut className="h-4 w-4 flex-shrink-0" />
+          <span className="truncate">
+            {isSigningOut ? 'Signing out...' : 'Sign Out'}
+          </span>
         </Button>
       </div>
     </div>
@@ -209,7 +257,7 @@ export function Sidebar() {
               animate={{ x: 0 }}
               exit={{ x: -300 }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed inset-y-0 left-0 w-64 bg- border-r z-50 md:hidden"
+              className="fixed inset-y-0 left-0 w-64 bg-white border-r z-50 md:hidden"
             >
               <SidebarContent />
             </motion.div>
