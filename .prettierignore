@@ -1,0 +1,35 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build outputs
+.next
+dist
+out
+
+# Logs
+*.log
+
+# Database
+*.db
+*.sqlite
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env*
+
+# Editor
+.vscode
+.idea
+
+# Generated files
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Supabase
+supabase/.branches
+supabase/.temp
