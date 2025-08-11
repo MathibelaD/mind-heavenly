@@ -1,8 +1,21 @@
+"use client"
+
 import { useState, useEffect } from 'react'
 import { createBrowserClient } from '@supabase/ssr'
-import type { Session, User } from '@supabase/supabase-js'
+import type { Session, User as SupabaseUser } from '@supabase/supabase-js'
 import { UserRole } from '../auth'
 import { Database } from '../database.types'
+
+// Extend the Supabase User type with your custom properties
+interface User extends Omit<SupabaseUser, 'id' | 'email'> {
+  id: string
+  email: string
+  role: UserRole
+  isDemo: boolean
+  name?: string
+  firstName?: string
+  lastName?: string
+}
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null)
@@ -72,6 +85,7 @@ export function useAuth() {
 
               console.log('useAuth: user created successfully')
               setUser({
+                ...session.user,
                 id: createdUser.id,
                 email: createdUser.email,
                 role: createdUser.role,
@@ -87,6 +101,7 @@ export function useAuth() {
           } else {
             console.log('useAuth: user found, setting profile')
             setUser({
+              ...session.user,
               id: userData.id,
               email: userData.email,
               role: userData.role,
@@ -132,6 +147,7 @@ export function useAuth() {
 
           if (userData) {
             setUser({
+              ...session.user,
               id: userData.id,
               email: userData.email,
               role: userData.role,
@@ -185,6 +201,7 @@ export function useAuth() {
 
       // Update local state
       setUser({
+        ...session!.user,
         id: data.id,
         email: data.email,
         role: data.role,
