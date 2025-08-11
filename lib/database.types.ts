@@ -652,6 +652,53 @@ export type Database = {
           }
         ]
       }
+
+      client_therapist_assignments: {
+  Row: {
+    id: string
+    client_id: string
+    therapist_id: string
+    assigned_at: string // ISO date string
+    status: 'ACTIVE' | 'INACTIVE'
+    created_at: string
+    updated_at: string
+  }
+  Insert: {
+    id?: string
+    client_id: string
+    therapist_id: string
+    assigned_at?: string
+    status?: 'ACTIVE' | 'INACTIVE'
+    created_at?: string
+    updated_at?: string
+  }
+  Update: {
+    id?: string
+    client_id?: string
+    therapist_id?: string
+    assigned_at?: string
+    status?: 'ACTIVE' | 'INACTIVE'
+    created_at?: string
+    updated_at?: string
+  }
+  Relationships: [
+    {
+      foreignKeyName: "client_therapist_assignments_client_id_fkey"
+      columns: ["client_id"]
+      isOneToOne: false
+      referencedRelation: "users"
+      referencedColumns: ["id"]
+    },
+    {
+      foreignKeyName: "client_therapist_assignments_therapist_id_fkey"
+      columns: ["therapist_id"]
+      isOneToOne: false
+      referencedRelation: "users"
+      referencedColumns: ["id"]
+    }
+  ]
+}
+
     }
     Views: {
       [_ in never]: never
