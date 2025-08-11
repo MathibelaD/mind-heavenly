@@ -1,6 +1,6 @@
 'use client'
 
-import { useSession } from 'next-auth/react'
+import { useSession } from '@supabase/auth-helpers-react'
 import { motion } from 'framer-motion'
 import { 
   Calendar, 
@@ -16,9 +16,9 @@ import {
   Sparkles,
   Target
 } from 'lucide-react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../../../components/ui/card'
+import { Button } from '../../../../components/ui/button'
+import { Avatar, AvatarFallback } from '../../../../components/ui/avatar'
 
 const relationshipMetrics = [
   {
@@ -111,7 +111,7 @@ const recentActivity = [
 ]
 
 export default function CoupleDashboard() {
-  const { data: session } = useSession()
+  const session = useSession()
   const userName = session?.user?.name?.split(' ')[0] || 'Partner'
   const isPartner1 = session?.user?.role === 'COUPLE_PARTNER_1'
   const partnerName = isPartner1 ? 'Taylor' : 'Jamie'
