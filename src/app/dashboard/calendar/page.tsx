@@ -16,11 +16,12 @@ import {
   XCircle
 } from 'lucide-react'
 import { format, addDays, isSameDay, isAfter, isBefore, startOfDay } from 'date-fns'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Calendar } from '@/components/ui/calendar'
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../../../components/ui/card'
+import { Button } from '../../../../components/ui/button'
+import { Calendar } from '../../../../components/ui/calendar'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../../../../components/ui/dialog'
+import { Avatar, AvatarFallback } from '../../../../components/ui/avatar'
+import { useAuth } from '../../../../lib/hooks/useAuth'
 
 interface SessionEvent {
   id: string
@@ -96,13 +97,15 @@ const timeSlots = [
 ]
 
 export default function CalendarPage() {
-  const { data: session } = useSession()
+  const { user } = useAuth()
+  
+  
   const [selectedDate, setSelectedDate] = useState<Date>(new Date())
   const [sessions, setSessions] = useState<SessionEvent[]>(mockSessions)
   const [showBookingDialog, setShowBookingDialog] = useState(false)
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string>('')
 
-  const userRole = session?.user?.role
+  const userRole = user?.role
   const isTherapist = userRole === 'THERAPIST'
 
   const getSessionsForDate = (date: Date) => {

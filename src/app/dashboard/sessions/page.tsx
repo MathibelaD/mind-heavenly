@@ -18,12 +18,12 @@ import {
   Search
 } from 'lucide-react'
 import { format, addDays, isAfter, isBefore } from 'date-fns'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../../../components/ui/card'
+import { Button } from '../../../../components/ui/button'
+import { Input } from '../../../../components/ui/input'
+import { Avatar, AvatarFallback } from '../../../../components/ui/avatar'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../../../../components/ui/dialog'
+import { useAuth } from '../../../../lib/hooks/useAuth'
 interface Session {
   id: string
   title: string
@@ -114,13 +114,13 @@ const mockSessions: Session[] = [
 ]
 
 export default function SessionsPage() {
-  const { data: session } = useSession()
+  const { user } = useAuth()
   const [sessions] = useState<Session[]>(mockSessions)
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('all')
   const [selectedSession, setSelectedSession] = useState<Session | null>(null)
 
-  const userRole = session?.user?.role
+  const userRole = user?.role
   const isTherapist = userRole === 'THERAPIST'
 
   const filteredSessions = sessions.filter(sess => {

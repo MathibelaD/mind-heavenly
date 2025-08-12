@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createServerSupabaseClient } from '@/lib/auth'
-import { generateAIResponse, analyzeSentiment, CrisisLevel } from '@/lib/ai'
+import { createServerSupabaseClient } from '../../../../../lib/auth'
+import { generateAIResponse } from '../../../../../lib/ai'
 
 export async function POST(request: NextRequest) {
   try {

@@ -259,6 +259,16 @@ export default function SignInPage() {
                       {isLoading ? 'Signing in...' : 'Sign In'}
                     </Button>
                   </form>
+                  <div className="mt-6 text-sm text-muted-foreground text-center">
+                    Don't have an account?{' '}
+                    <button
+                      type="button"
+                      className="text-primary underline bg-transparent border-none outline-none cursor-pointer p-0 m-0"
+                      onClick={() => router.push('/auth/signup')}
+                    >
+                      Sign up
+                    </button>
+                  </div>
                 </CardContent>
               </Card>
             </motion.div>
