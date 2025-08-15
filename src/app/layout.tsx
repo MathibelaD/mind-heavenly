@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import './globals.css';
+import Navbar from '../../components/layout/Navbar';
 import SupabaseProvider from "../../contexts/SupabaseProvider";
 
 const inter = Inter({
@@ -36,8 +37,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <body className="font-sans antialiased">
+        <Navbar />
         <SupabaseProvider>
-          {children}
+          <div className="pt-20">{/* Padding for fixed navbar */}
+            {children}
+          </div>
         </SupabaseProvider>
       </body>
     </html>

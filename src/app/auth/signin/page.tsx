@@ -9,6 +9,7 @@ import { Button } from '../../../../components/ui/button'
 import { Input } from '../../../../components/ui/input'
 import { Label } from '../../../../components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../../../components/ui/card'
+import Navbar from '../../../../components/layout/Navbar'
 
 const demoAccounts = [
   {
@@ -155,7 +156,9 @@ export default function SignInPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-therapy-50 via-wellness-50 to-mindful-50">
-      <div className="container mx-auto px-4 py-8">
+      <Navbar />
+      <div className="pt-20">
+        <div className="container mx-auto px-4 py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -273,7 +276,7 @@ export default function SignInPage() {
               </Card>
             </motion.div>
 
-            {/* Demo Accounts */}
+            {/* Things We Offer */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -281,57 +284,27 @@ export default function SignInPage() {
               className="space-y-6"
             >
               <div className="text-center">
-                <h2 className="text-2xl font-display font-semibold mb-2">Try Demo Accounts</h2>
+                <h2 className="text-2xl font-display font-semibold mb-2">Things We Offer</h2>
                 <p className="text-muted-foreground">
-                  Explore different user experiences with pre-configured demo accounts
+                  Explore our platform's unique features designed for your mental wellness journey
                 </p>
               </div>
-
-              <div className="grid gap-4">
-                {demoAccounts.map((account, index) => {
-                  const Icon = account.icon
-                  return (
-                    <motion.div
-                      key={account.email}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 + index * 0.1 }}
-                    >
-                      <Card className="cursor-pointer card-hover backdrop-blur-sm bg-white/90">
-                        <CardContent className="p-6">
-                          <div className="flex items-start gap-4">
-                            <div className={`${account.gradient} p-3 rounded-2xl`}>
-                              <Icon className="h-6 w-6 text-white" />
-                            </div>
-                            <div className="flex-1">
-                              <h3 className="font-semibold text-lg mb-1">{account.role}</h3>
-                              <p className="text-sm text-muted-foreground mb-3">
-                                {account.description}
-                              </p>
-                              <div className="flex flex-col sm:flex-row gap-2 text-xs">
-                                <code className="bg-muted px-2 py-1 rounded">
-                                  {account.email}
-                                </code>
-                                <code className="bg-muted px-2 py-1 rounded">
-                                  {account.password}
-                                </code>
-                              </div>
-                              <Button
-                                onClick={() => handleDemoLogin(account.email, account.password)}
-                                variant="outline"
-                                size="sm"
-                                className="mt-3 w-full sm:w-auto"
-                                disabled={isLoading}
-                              >
-                                {isLoading ? 'Loading...' : 'Try Demo'}
-                              </Button>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  )
-                })}
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="bg-white/90 rounded-xl shadow p-6 flex flex-col items-center">
+                  <Brain className="h-8 w-8 text-therapy-400 mb-2" />
+                  <h3 className="font-semibold text-lg mb-1">AI-Powered Support</h3>
+                  <p className="text-sm text-muted-foreground text-center">24/7 smart assistant for instant help and crisis detection.</p>
+                </div>
+                <div className="bg-white/90 rounded-xl shadow p-6 flex flex-col items-center">
+                  <Heart className="h-8 w-8 text-wellness-400 mb-2" />
+                  <h3 className="font-semibold text-lg mb-1">Secure & Private</h3>
+                  <p className="text-sm text-muted-foreground text-center">HIPAA-compliant video sessions and encrypted messaging.</p>
+                </div>
+                <div className="bg-white/90 rounded-xl shadow p-6 flex flex-col items-center">
+                  <Sparkles className="h-8 w-8 text-mindful-400 mb-2" />
+                  <h3 className="font-semibold text-lg mb-1">Personalized Resources</h3>
+                  <p className="text-sm text-muted-foreground text-center">Curated meditations, exercises, and therapy content.</p>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -376,6 +349,7 @@ export default function SignInPage() {
           </motion.div>
         </motion.div>
       </div>
-    </div>
+        </div>
+      </div>
   )
 }
