@@ -74,14 +74,8 @@ export default function Home() {
         </div>
         {/* Center: Navigation Links */}
         <div className="flex-1 flex justify-center">
-          <div className="flex gap-6 text-sky-700 font-semibold text-base">
-            <button className={`hover:text-sky-400 transition ${visibleSection==='hero' ? 'text-sky-500 underline' : ''}`} onClick={() => scrollTo(heroRef)}>Home</button>
-            <button className={`hover:text-sky-400 transition ${visibleSection==='features' ? 'text-sky-500 underline' : ''}`} onClick={() => scrollTo(featuresRef)}>Our Services</button>
-            <button className={`hover:text-sky-400 transition ${visibleSection==='howItWorks' ? 'text-sky-500 underline' : ''}`} onClick={() => scrollTo(howItWorksRef)}>How It Works</button>
-            <button className={`hover:text-sky-400 transition ${visibleSection==='community' ? 'text-sky-500 underline' : ''}`} onClick={() => scrollTo(therapistsRef)}>Community</button>
-            <button className={`hover:text-sky-400 transition ${visibleSection==='whyUs' ? 'text-sky-500 underline' : ''}`} onClick={() => scrollTo(couplesRef)}>Why Us</button>
-            <button className={`hover:text-sky-400 transition ${visibleSection==='testimonials' ? 'text-sky-500 underline' : ''}`} onClick={() => scrollTo(clientsRef)}>Testimonials</button>
-            <button className={`hover:text-sky-400 transition ${visibleSection==='pricing' ? 'text-sky-500 underline' : ''}`} onClick={() => scrollTo(pricingRef)}>Pricing</button>
+          <div className="flex gap-6 font-semibold text-base">
+            <button className={`hover:text-[rgb(0,180,255)] transition ${visibleSection==='hero' ? 'text-[rgb(0,180,255)] underline' : 'text-[rgb(40,40,40)]'}`} onClick={() => scrollTo(heroRef)}>Home</button>
           </div>
         </div>
         {/* Right: Auth Buttons */}
@@ -109,38 +103,42 @@ export default function Home() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.5 }}
           transition={{ duration: 0.8 }}
-          className="text-5xl md:text-7xl font-extrabold font-display text-sky-500 drop-shadow-xl mb-6 text-center"
+          className="text-6xl md:text-8xl font-extrabold font-display mb-8 text-center drop-shadow-xl"
+          style={{ background: 'linear-gradient(90deg, rgb(0,180,255), rgb(255,0,180), rgb(0,255,180))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
         >
-          AI-Powered Therapy Matching<br />
-          <span className="text-sky-700">Find Your Perfect Therapist</span>
+          AI Powered Therapy
         </motion.h1>
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.5 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="text-2xl md:text-3xl text-sky-700/90 mb-8 font-medium"
+          className="mb-10 flex flex-col items-center justify-center gap-6"
         >
-          MindHeavenly connects you with the right therapist or support group using advanced AI matching.<br />
-          Discover personalized care, resources, and a supportive community for your mental wellness journey.
-        </motion.p>
-        <div className="flex flex-col md:flex-row gap-4 justify-center mb-8">
-          <button
-            className="px-10 py-4 rounded-full bg-sky-400 text-white font-bold text-lg shadow-xl hover:bg-sky-500 hover:text-white transition"
-            onClick={() => router.push("/auth/signup")}
-          >
-            Get Started
-          </button>
-          <button
-            className="px-10 py-4 rounded-full border-2 border-sky-400 bg-white text-sky-500 font-bold text-lg shadow-xl hover:bg-sky-400 hover:text-white transition"
-            onClick={() => router.push("/auth/signin")}
-          >
-            Login
-          </button>
-        </div>
+          <div className="text-2xl md:text-3xl font-medium text-center" style={{ color: 'rgb(40,40,40)' }}>
+            MindHeavenly connects you with the right therapist or support group using advanced AI.<br />
+            Discover personalized care, resources, and a supportive community for your mental wellness journey.
+          </div>
+          <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <button
+              className="px-10 py-4 rounded-full font-bold text-lg shadow-xl transition"
+              style={{ background: 'linear-gradient(90deg, rgb(0,180,255), rgb(255,0,180))', color: '#fff' }}
+              onClick={() => router.push("/auth/signup")}
+            >
+              Get Started
+            </button>
+            <button
+              className="px-10 py-4 rounded-full border-2 font-bold text-lg shadow-xl transition"
+              style={{ borderColor: 'rgb(0,180,255)', color: 'rgb(0,180,255)', background: '#fff' }}
+              onClick={() => router.push("/auth/signin")}
+            >
+              Login
+            </button>
+          </div>
+        </motion.div>
         <div className="flex flex-col items-center gap-2 mb-6">
-          <span className="text-sky-400 font-semibold text-lg">Trusted by</span>
-          <div className="flex gap-6 justify-center text-sky-700/80 text-xl">
+          <span className="font-semibold text-lg" style={{ color: 'rgb(255,0,180)' }}>Trusted by</span>
+          <div className="flex gap-6 justify-center text-xl" style={{ color: 'rgb(0,180,255)' }}>
             <span className="font-bold">South African Therapy Association</span>
             <span className="font-bold">MindfulSA</span>
             <span className="font-bold">Wellness Network</span>
@@ -161,60 +159,192 @@ export default function Home() {
         <div className="mb-8 text-lg text-sky-700 text-center max-w-3xl mx-auto">
           <p>MindHeavenly offers a holistic platform for mental wellness, connecting individuals, couples, and therapists with the right support and resources. Our AI-powered system ensures you get the best match for your needs, while our tools empower you to grow and thrive.</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {/* For Individuals */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.4 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            className="bg-white rounded-2xl p-8 shadow-lg border-t-4 border-sky-300 flex flex-col items-center"
-          >
-            <span className="text-4xl mb-2 block">💬</span>
-            <h3 className="font-bold text-xl mb-2 text-sky-500">For Individuals</h3>
-            <ul className="text-gray-700 text-base list-disc list-inside text-left">
-              <li>Personalized therapist matching based on your unique needs and preferences</li>
-              <li>1:1 and group therapy sessions with certified professionals</li>
-              <li>24/7 AI-powered support chat for instant help</li>
-              <li>Progress tracking and mood journaling</li>
-              <li>Access to a library of self-help resources and exercises</li>
-            </ul>
-          </motion.div>
-          {/* For Couples */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.4 }}
-            transition={{ delay: 0.75, duration: 0.6 }}
-            className="bg-white rounded-2xl p-8 shadow-lg border-t-4 border-emerald-200 flex flex-col items-center"
-          >
-            <span className="text-4xl mb-2 block">❤️</span>
-            <h3 className="font-bold text-xl mb-2 text-emerald-400">For Couples</h3>
-            <ul className="text-gray-700 text-base list-disc list-inside text-left">
-              <li>Couples therapy for relationship growth and healing</li>
-              <li>Personalized relationship resources and activities</li>
-              <li>Confidential, secure sessions for you and your partner</li>
-              <li>Progress tracking for couples goals</li>
-            </ul>
-          </motion.div>
-          {/* For Therapists */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.4 }}
-            transition={{ delay: 0.9, duration: 0.6 }}
-            className="bg-white rounded-2xl p-8 shadow-lg border-t-4 border-pink-200 flex flex-col items-center"
-          >
-            <span className="text-4xl mb-2 block">🧑‍⚕️</span>
-            <h3 className="font-bold text-xl mb-2 text-pink-400">For Therapists</h3>
-            <ul className="text-gray-700 text-base list-disc list-inside text-left">
-              <li>Grow your practice and reach new clients</li>
-              <li>Advanced analytics and client management tools</li>
-              <li>Secure, easy-to-use teletherapy platform</li>
-              <li>Access to professional development resources</li>
-              <li>Priority support and networking opportunities</li>
-            </ul>
-          </motion.div>
+        <div className="w-full max-w-5xl mx-auto">
+          <div className="md:grid md:grid-cols-3 gap-8 hidden md:flex">
+            {/* Desktop grid */}
+            <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: 0.4 }} transition={{ delay: 0.6, duration: 0.6 }} className="bg-white rounded-2xl p-8 shadow-lg border-t-4 border-[rgb(0,180,255)] flex flex-col items-center h-full">
+              <span className="text-6xl mb-6 block animate-bounce">💬</span>
+              <h3 className="font-bold text-2xl mb-4 text-[rgb(0,180,255)]">For Individuals</h3>
+              <div className="flex flex-col gap-4 w-full">
+                <div className="flex flex-col items-center gap-2 p-4 rounded-xl bg-[rgb(240,250,255)] shadow-sm">
+                  <span className="text-2xl">🤖</span>
+                  <span className="font-semibold text-[rgb(0,180,255)] text-center">Personalized AI Therapist Match</span>
+                  <span className="text-gray-600 text-sm text-center">Get matched instantly with the best therapist for you.</span>
+                </div>
+                <div className="flex flex-col items-center gap-2 p-4 rounded-xl bg-[rgb(240,250,255)] shadow-sm">
+                  <span className="text-2xl">👥</span>
+                  <span className="font-semibold text-[rgb(0,180,255)] text-center">1:1 & Group Therapy Sessions</span>
+                  <span className="text-gray-600 text-sm text-center">Connect privately or join supportive groups.</span>
+                </div>
+                <div className="flex flex-col items-center gap-2 p-4 rounded-xl bg-[rgb(240,250,255)] shadow-sm">
+                  <span className="text-2xl">💡</span>
+                  <span className="font-semibold text-[rgb(0,180,255)] text-center">24/7 Instant AI Support Chat</span>
+                  <span className="text-gray-600 text-sm text-center">Help is always available, day or night.</span>
+                </div>
+                <div className="flex flex-col items-center gap-2 p-4 rounded-xl bg-[rgb(240,250,255)] shadow-sm">
+                  <span className="text-2xl">📈</span>
+                  <span className="font-semibold text-[rgb(0,180,255)] text-center">Progress Tracking & Mood Journal</span>
+                  <span className="text-gray-600 text-sm text-center">Monitor your growth and well-being.</span>
+                </div>
+                <div className="flex flex-col items-center gap-2 p-4 rounded-xl bg-[rgb(240,250,255)] shadow-sm">
+                  <span className="text-2xl">📚</span>
+                  <span className="font-semibold text-[rgb(0,180,255)] text-center">Self-Help Resources Library</span>
+                  <span className="text-gray-600 text-sm text-center">Explore guides, exercises, and more.</span>
+                </div>
+              </div>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: 0.4 }} transition={{ delay: 0.75, duration: 0.6 }} className="bg-white rounded-2xl p-8 shadow-lg border-t-4 border-[rgb(0,255,180)] flex flex-col items-center h-full">
+              <span className="text-6xl mb-6 block animate-bounce">❤️</span>
+              <h3 className="font-bold text-2xl mb-4 text-[rgb(0,255,180)]">For Couples</h3>
+              <div className="flex flex-col gap-4 w-full">
+                <div className="flex flex-col items-center gap-2 p-4 rounded-xl bg-[rgb(240,255,250)] shadow-sm">
+                  <span className="text-2xl">💑</span>
+                  <span className="font-semibold text-[rgb(0,255,180)] text-center">Relationship Growth & Healing</span>
+                  <span className="text-gray-600 text-sm text-center">Strengthen your bond and heal together.</span>
+                </div>
+                <div className="flex flex-col items-center gap-2 p-4 rounded-xl bg-[rgb(240,255,250)] shadow-sm">
+                  <span className="text-2xl">🎯</span>
+                  <span className="font-semibold text-[rgb(0,255,180)] text-center">Personalized Activities & Resources</span>
+                  <span className="text-gray-600 text-sm text-center">Tailored tools for your relationship.</span>
+                </div>
+                <div className="flex flex-col items-center gap-2 p-4 rounded-xl bg-[rgb(240,255,250)] shadow-sm">
+                  <span className="text-2xl">🔒</span>
+                  <span className="font-semibold text-[rgb(0,255,180)] text-center">Confidential, Secure Sessions</span>
+                  <span className="text-gray-600 text-sm text-center">Private and safe for you and your partner.</span>
+                </div>
+                <div className="flex flex-col items-center gap-2 p-4 rounded-xl bg-[rgb(240,255,250)] shadow-sm">
+                  <span className="text-2xl">📈</span>
+                  <span className="font-semibold text-[rgb(0,255,180)] text-center">Couples Goals Tracking</span>
+                  <span className="text-gray-600 text-sm text-center">Track progress and celebrate milestones.</span>
+                </div>
+              </div>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: 0.4 }} transition={{ delay: 0.9, duration: 0.6 }} className="bg-white rounded-2xl p-8 shadow-lg border-t-4 border-[rgb(255,0,180)] flex flex-col items-center h-full">
+              <span className="text-6xl mb-6 block animate-bounce">🧑‍⚕️</span>
+              <h3 className="font-bold text-2xl mb-4 text-[rgb(255,0,180)]">For Therapists</h3>
+              <div className="flex flex-col gap-4 w-full">
+                <div className="flex flex-col items-center gap-2 p-4 rounded-xl bg-[rgb(255,240,250)] shadow-sm">
+                  <span className="text-2xl">🚀</span>
+                  <span className="font-semibold text-[rgb(255,0,180)] text-center">Grow Your Practice</span>
+                  <span className="text-gray-600 text-sm text-center">Expand your reach and impact.</span>
+                </div>
+                <div className="flex flex-col items-center gap-2 p-4 rounded-xl bg-[rgb(255,240,250)] shadow-sm">
+                  <span className="text-2xl">📊</span>
+                  <span className="font-semibold text-[rgb(255,0,180)] text-center">Advanced Analytics & Management</span>
+                  <span className="text-gray-600 text-sm text-center">Tools to manage and grow your client base.</span>
+                </div>
+                <div className="flex flex-col items-center gap-2 p-4 rounded-xl bg-[rgb(255,240,250)] shadow-sm">
+                  <span className="text-2xl">🔐</span>
+                  <span className="font-semibold text-[rgb(255,0,180)] text-center">Secure Teletherapy Platform</span>
+                  <span className="text-gray-600 text-sm text-center">Safe, encrypted sessions for all.</span>
+                </div>
+                <div className="flex flex-col items-center gap-2 p-4 rounded-xl bg-[rgb(255,240,250)] shadow-sm">
+                  <span className="text-2xl">🎓</span>
+                  <span className="font-semibold text-[rgb(255,0,180)] text-center">Professional Development</span>
+                  <span className="text-gray-600 text-sm text-center">Access resources and training.</span>
+                </div>
+                <div className="flex flex-col items-center gap-2 p-4 rounded-xl bg-[rgb(255,240,250)] shadow-sm">
+                  <span className="text-2xl">🤝</span>
+                  <span className="font-semibold text-[rgb(255,0,180)] text-center">Priority Support & Networking</span>
+                  <span className="text-gray-600 text-sm text-center">Connect with peers and get help fast.</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+          {/* Mobile horizontal scroll carousel */}
+          <div className="md:hidden flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory">
+            {/* Card 1 */}
+            <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: 0.4 }} transition={{ delay: 0.6, duration: 0.6 }} className="min-w-[80vw] max-w-xs bg-white rounded-2xl p-6 shadow-lg border-t-4 border-[rgb(0,180,255)] flex flex-col items-center snap-center">
+              <span className="text-5xl mb-4 block animate-bounce">💬</span>
+              <h3 className="font-bold text-xl mb-4 text-[rgb(0,180,255)]">For Individuals</h3>
+              <div className="flex flex-col gap-2 w-full">
+                <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-[rgb(240,250,255)] shadow-sm">
+                  <span className="text-lg">🤖</span>
+                  <span className="font-semibold text-[rgb(0,180,255)] text-center">AI Therapist Match</span>
+                  <span className="text-gray-600 text-xs text-center">Best therapist for you.</span>
+                </div>
+                <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-[rgb(240,250,255)] shadow-sm">
+                  <span className="text-lg">👥</span>
+                  <span className="font-semibold text-[rgb(0,180,255)] text-center">1:1 & Group Sessions</span>
+                  <span className="text-gray-600 text-xs text-center">Private & group support.</span>
+                </div>
+                <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-[rgb(240,250,255)] shadow-sm">
+                  <span className="text-lg">💡</span>
+                  <span className="font-semibold text-[rgb(0,180,255)] text-center">24/7 AI Chat</span>
+                  <span className="text-gray-600 text-xs text-center">Help anytime.</span>
+                </div>
+                <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-[rgb(240,250,255)] shadow-sm">
+                  <span className="text-lg">📈</span>
+                  <span className="font-semibold text-[rgb(0,180,255)] text-center">Progress & Mood</span>
+                  <span className="text-gray-600 text-xs text-center">Track your journey.</span>
+                </div>
+                <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-[rgb(240,250,255)] shadow-sm">
+                  <span className="text-lg">📚</span>
+                  <span className="font-semibold text-[rgb(0,180,255)] text-center">Resources Library</span>
+                  <span className="text-gray-600 text-xs text-center">Guides & exercises.</span>
+                </div>
+              </div>
+            </motion.div>
+            {/* Card 2 */}
+            <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: 0.4 }} transition={{ delay: 0.75, duration: 0.6 }} className="min-w-[80vw] max-w-xs bg-white rounded-2xl p-6 shadow-lg border-t-4 border-[rgb(0,255,180)] flex flex-col items-center snap-center">
+              <span className="text-5xl mb-4 block animate-bounce">❤️</span>
+              <h3 className="font-bold text-xl mb-4 text-[rgb(0,255,180)]">For Couples</h3>
+              <div className="flex flex-col gap-2 w-full">
+                <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-[rgb(240,255,250)] shadow-sm">
+                  <span className="text-lg">💑</span>
+                  <span className="font-semibold text-[rgb(0,255,180)] text-center">Growth & Healing</span>
+                  <span className="text-gray-600 text-xs text-center">Strengthen your bond.</span>
+                </div>
+                <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-[rgb(240,255,250)] shadow-sm">
+                  <span className="text-lg">🎯</span>
+                  <span className="font-semibold text-[rgb(0,255,180)] text-center">Activities & Resources</span>
+                  <span className="text-gray-600 text-xs text-center">Tailored for couples.</span>
+                </div>
+                <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-[rgb(240,255,250)] shadow-sm">
+                  <span className="text-lg">🔒</span>
+                  <span className="font-semibold text-[rgb(0,255,180)] text-center">Secure Sessions</span>
+                  <span className="text-gray-600 text-xs text-center">Private & safe.</span>
+                </div>
+                <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-[rgb(240,255,250)] shadow-sm">
+                  <span className="text-lg">📈</span>
+                  <span className="font-semibold text-[rgb(0,255,180)] text-center">Goals Tracking</span>
+                  <span className="text-gray-600 text-xs text-center">Celebrate milestones.</span>
+                </div>
+              </div>
+            </motion.div>
+            {/* Card 3 */}
+            <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false, amount: 0.4 }} transition={{ delay: 0.9, duration: 0.6 }} className="min-w-[80vw] max-w-xs bg-white rounded-2xl p-6 shadow-lg border-t-4 border-[rgb(255,0,180)] flex flex-col items-center snap-center">
+              <span className="text-5xl mb-4 block animate-bounce">🧑‍⚕️</span>
+              <h3 className="font-bold text-xl mb-4 text-[rgb(255,0,180)]">For Therapists</h3>
+              <div className="flex flex-col gap-2 w-full">
+                <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-[rgb(255,240,250)] shadow-sm">
+                  <span className="text-lg">🚀</span>
+                  <span className="font-semibold text-[rgb(255,0,180)] text-center">Grow Practice</span>
+                  <span className="text-gray-600 text-xs text-center">Expand your reach.</span>
+                </div>
+                <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-[rgb(255,240,250)] shadow-sm">
+                  <span className="text-lg">📊</span>
+                  <span className="font-semibold text-[rgb(255,0,180)] text-center">Analytics & Management</span>
+                  <span className="text-gray-600 text-xs text-center">Grow your client base.</span>
+                </div>
+                <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-[rgb(255,240,250)] shadow-sm">
+                  <span className="text-lg">🔐</span>
+                  <span className="font-semibold text-[rgb(255,0,180)] text-center">Secure Platform</span>
+                  <span className="text-gray-600 text-xs text-center">Encrypted sessions.</span>
+                </div>
+                <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-[rgb(255,240,250)] shadow-sm">
+                  <span className="text-lg">🎓</span>
+                  <span className="font-semibold text-[rgb(255,0,180)] text-center">Development</span>
+                  <span className="text-gray-600 text-xs text-center">Resources & training.</span>
+                </div>
+                <div className="flex flex-col items-center gap-1 p-2 rounded-xl bg-[rgb(255,240,250)] shadow-sm">
+                  <span className="text-lg">🤝</span>
+                  <span className="font-semibold text-[rgb(255,0,180)] text-center">Support & Networking</span>
+                  <span className="text-gray-600 text-xs text-center">Connect & get help.</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
